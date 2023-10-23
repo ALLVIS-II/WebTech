@@ -1,63 +1,64 @@
 CREATE TABLE Address (
-    adressID INT IDENTITY PRIMARY KEY,
-    addressLine varchar(100) NOT NULL,
-    suburb varchar(50) NOT NULL,
-    postcode varchar(10) NOT NULL,
-    region varchar(50) NOT NULL,
-    country varchar(50) NOT NULL
+    AddressID INT IDENTITY PRIMARY KEY,
+    AddressLine VARCHAR(100) NOT NULL,
+    Suburb VARCHAR(50) NOT NULL,
+    Postcode VARCHAR(10) NOT NULL,
+    Region VARCHAR(50) NOT NULL,
+    Country VARCHAR(50) NOT NULL
 );
 
 CREATE TABLE Customers (
-    customerID INT IDENTITY PRIMARY KEY,
-    firstName VARCHAR(100) NOT NULL,
-    lastName VARCHAR(100) NOT NULL,
-    email VARCHAR(100) NOT NULL,
-    mainPhoneNumber VARCHAR(15) NOT NULL,
-    secondaryPhoneNumber VARCHAR(15),
-    addressID INT,
-    FOREIGN KEY (addressID) REFERENCES Customers(addressID)
+    CustomerID INT IDENTITY PRIMARY KEY,
+    FirstName VARCHAR(100) NOT NULL,
+    LastName VARCHAR(100) NOT NULL,
+    Email VARCHAR(100) NOT NULL,
+    MainPhoneNumber VARCHAR(15) NOT NULL,
+    SecondaryPhoneNumber VARCHAR(15),
+    AddressID INT,
+    FOREIGN KEY (AddressID) REFERENCES Address(AddressID)
 );
 
-CREATE TABLE ItemCategorise (
-    categoryID INT IDENTITY PRIMARY KEY,
-    categoryName VARCHAR(100) NOT NULL,
-    parentCategoryID INT, 
-    FOREIGN KEY (parentCategoryID) REFERENCES ItemCategorise(parentCategoryID)
+CREATE TABLE ItemCategories (
+    CategoryID INT IDENTITY PRIMARY KEY,
+    CategoryName VARCHAR(100) NOT NULL,
+    ParentCategoryID INT,
+    FOREIGN KEY (ParentCategoryID) REFERENCES ItemCategories(CategoryID)
 );
 
-CREATE TABLE Item (
-    itemID INT IDENTITY PRIMARY KEY,
-    itemName VARCHAR(150) NOT NULL,
-    itemDescription VARCHAR(MAX) NOT NULL,
-    itemCost DECIMAL(10,2) NOT NULL,
-    itemImage VARCHAR(MAX) NOT NULL,
-    categoryID INT,
-    FOREIGN KEY (Item) REFERENCES Item(categoryID)
+CREATE TABLE Items (
+    ItemID INT IDENTITY PRIMARY KEY,
+    ItemName VARCHAR(150) NOT NULL,
+    ItemDescription VARCHAR(MAX) NOT NULL,
+    ItemCost DECIMAL(10,2) NOT NULL,
+    ItemImage VARCHAR(MAX) NOT NULL,
+    CategoryID INT,
+    FOREIGN KEY (CategoryID) REFERENCES ItemCategories(CategoryID)
 );
 
-CREATE Table CustomersOrders (
-    orderNumber	INT	IDENTITY PRIMARY KEY,
-    customerID INT,
-    orderDate DATE NOT NULL, DEFAULT GetDate(),
-    totalValue DECIMAL(10,2) NOT NULL,
-    datePaid DATE,
-    FOREIGN Key (customerID) REFERENCES CustomersOrders(customerID)
+CREATE TABLE CustomersOrders (
+    OrderNumber INT IDENTITY PRIMARY KEY,
+    CustomerID INT,
+    OrderDate DATE NOT NULL DEFAULT GetDate(),
+    TotalValue DECIMAL(10,2) NOT NULL,
+    DatePaid DATE,
+    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID)
 );
 
 CREATE TABLE ItemsinOrder (
-    orderNumber	INT,
+    OrderNumber INT,
     ItemID INT,
-    numberOf INT NOT NULL, DEFAULT 1,
-    FOREIGN Key (orderNumber) REFERENCES ItemsinOrder(orderNumber),
-    FOREIGN Key (ItemID) REFERENCES ItemsinOrder(ItemID)
+    NumberOf INT NOT NULL DEFAULT 1,
+    FOREIGN KEY (OrderNumber) REFERENCES CustomersOrders(OrderNumber),
+    FOREIGN KEY (ItemID) REFERENCES Items(ItemID)
 );
 
 CREATE TABLE Reviews (
-    customerID INT,
-    itemID INT,
-    reviewDate DATE NOT NULL, DEFAULT GetDate(),
-    rating	INT	NOT NULL CHECK(rating BETWEEN 1 AND 5),
-    reviewDescription VARCHAR(MAX) NOT NULL,
-    FOREIGN Key (customerID) REFERENCES Reviews(customerID),
-)
+    CustomerID INT,
+    ItemID INT,
+    ReviewDate DATE NOT NULL DEFAULT GetDate(),
+    Rating INT NOT NULL CHECK (Rating BETWEEN 1 AND 5),
+    ReviewDescription VARCHAR(MAX) NOT NULL,
+    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID),
+    FOREIGN KEY (ItemID) REFERENCES Items(ItemID)
+);
 
