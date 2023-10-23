@@ -33,7 +33,7 @@ CREATE TABLE Item (
     itemImage VARCHAR(MAX) NOT NULL,
     categoryID INT,
     FOREIGN KEY (Item) REFERENCES Item(categoryID)
-)
+);
 
 CREATE Table CustomersOrders (
     orderNumber	INT	IDENTITY PRIMARY KEY,
@@ -42,7 +42,7 @@ CREATE Table CustomersOrders (
     totalValue DECIMAL(10,2) NOT NULL,
     datePaid DATE,
     FOREIGN Key (customerID) REFERENCES CustomersOrders(customerID)
-)
+);
 
 CREATE TABLE ItemsinOrder (
     orderNumber	INT,
@@ -50,7 +50,7 @@ CREATE TABLE ItemsinOrder (
     numberOf INT NOT NULL, DEFAULT 1,
     FOREIGN Key (orderNumber) REFERENCES ItemsinOrder(orderNumber),
     FOREIGN Key (ItemID) REFERENCES ItemsinOrder(ItemID)
-)
+);
 
 CREATE TABLE Reviews (
     customerID INT,
@@ -60,3 +60,4 @@ CREATE TABLE Reviews (
     reviewDescription VARCHAR(MAX) NOT NULL,
     FOREIGN Key (customerID) REFERENCES Reviews(customerID),
 )
+
