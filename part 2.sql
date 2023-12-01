@@ -1,16 +1,18 @@
 Auctions(AuctionID, AuctionDate, AuctionType)
 PK(AuctionID)
-
+FK(AddressID)->Address(addressID) 
+FK(AuctionTypeID) -> AuctionType(AuctionTypeID)// true
+FK(CatalogueID) -> Catalogues
 Address(addressID, addressID, addressLine, suburb, postcode, region, country)
-PK(addressID)
+PK(addressID)// true
 
 AuctionsType(AuctionsTypeID, AuctionType)
-PK(AuctionsTypeID)
-FK(AuctionsType) -> Auctions(AuctionsType)
+PK(AuctionsTypeID)// true
+
 
 Catalogues(CatalogueID, Name, Description, showcasephoto, Check)
 PK(CatalogueID)
-
+FK
 CatalogueType(CataloguetypeID, catalogueType)
 PK(CatalogueID)
 
