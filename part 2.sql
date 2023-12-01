@@ -6,7 +6,7 @@ PK(addressID)
 
 AuctionsType(AuctionsTypeID, AuctionType)
 PK(AuctionsTypeID)
-FK(AuctionsType) ->Auctions(AuctionsType)
+FK(AuctionsType) -> Auctions(AuctionsType)
 
 Catalogues(CatalogueID, Name, Description, showcasephoto, Check)
 PK(CatalogueID)
